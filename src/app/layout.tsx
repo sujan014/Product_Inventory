@@ -26,8 +26,18 @@ export default function RootLayout({
                   </div>
                 </Link>                
                 <Link href='/sales'>
-                <div className="mr-10 text-blue-600 hover:text-blue-200">
+                  <div className="mr-10 text-blue-600 hover:text-blue-200">
                     Sales
+                  </div>
+                </Link>
+                <Link href='/new_product'>
+                  <div className="mr-10 text-blue-600 hover:text-blue-200">
+                    New Product
+                  </div>
+                </Link>
+                <Link href='/new_category'>
+                  <div className="mr-10 text-blue-600 hover:text-blue-200">
+                    New Category
                   </div>
                 </Link>
             </nav>
