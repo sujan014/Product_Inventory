@@ -38,29 +38,46 @@ export const actionProduct = async (formData: FormData) => {
     revalidatePath("/");
 }
 
-// export const action = async (formData: FormData) => {
-//     console.log(Object.fromEntries(formData));
-//     const data = {
-//         formName: formData.get("name") as string,
-//         formQuantity: parseInt(formData.get("quantity") as string)
-//     }
+export const actionEditProduct = async (formId: string, prodName: string, prodQty: number) => {
+    console.log(`id: ${formId}`);
+    //console.log(Object.fromEntries(formData));
+    const data = {
+        formName: prodName as string,
+        formQuantity: prodQty as number
+    }
 
-//     console.log("form name => " + data.formName);
-//     console.log("form quantity => " + data.formQuantity);
-//     try{
-//         await prisma.products.create({
-//             data: {
-//                 name: data.formName,
-//                 inventory: {
-//                     create: {
-//                         qty: data.formQuantity
-//                     }
-//                 }
-//             }
-//         })
-        
-//     } catch(error){
-//         console.log(error);
-//     }
-//     revalidatePath("/");
-// }
+    try{
+        await prisma.products.update({
+            where: {
+                //name: data.formName
+                id: formId
+            },
+            data: {
+                name: data.formName,
+                inventory: {
+                    update: {
+                        qty: data.formQuantity
+                    }
+                }
+            }
+
+        })
+    } catch (error){
+        console.log(error);
+    }
+    revalidatePath('/');
+}
+
+export const actionDeleteProduct = async (productId: string) => {
+    // delete 
+    try{
+        await prisma.products.delete({
+            where: {
+                id: productId,
+            }
+        })
+    } catch(error){
+        console.log(error);
+    }
+    revalidatePath("/");
+}

@@ -35,5 +35,5 @@ export default function FruitCard(fruit: Fruit){
                 <button className="mt-3 w-full py-1 px-4 rounded-full text-white font-bold bg-blue-500 hover:bg-blue-700">Add to cart</button>
             </div>
         </div>
-    )    
+    )
 }

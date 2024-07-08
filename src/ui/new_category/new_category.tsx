@@ -6,14 +6,15 @@ export default function NewCategoryForm(){
     const formRef = useRef<HTMLFormElement>(null);
     
     const formAction = async (formData: FormData) => {
+        // validation here
+        // Zod validation tool
         await actionCategory(formData);
 
         formRef.current?.reset();
     }
 
     return(
-        <div 
-            className="w-96 mt-10 my-auto border-2 rounded-md flex  justify-center">
+        <div className="w-1/4 flex border-2 border-gray-100 shadow pt-6 px-5 mx-auto ">
             <form
                 className="grid grid-flow-row my-4 m-2 mx-4"
                 ref={formRef}
@@ -26,6 +27,7 @@ export default function NewCategoryForm(){
                         type='text'
                         name="category" 
                         placeholder="Enter new category"
+                        required
                     />
                 </div>
                 <button 

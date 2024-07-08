@@ -37,5 +37,5 @@ model Inventory {
 
   // one-to-one relationship
   productId String   @unique // foreign key 
-  product   Products @relation(fields: [productId], references: [id])
+  product   Products @relation(fields: [productId], references: [id], onDelete: Cascade)
 }

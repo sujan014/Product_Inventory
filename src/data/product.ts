@@ -1,5 +1,11 @@
 import prisma from "../../utils/prisma";
 
 export async function getAllProducts(){
-    return await prisma.products.findMany();
+    const allProducts =  await prisma.products.findMany({
+        include: {
+            inventory: true
+        }
+    });
+    console.log(allProducts);
+    return allProducts;
 }

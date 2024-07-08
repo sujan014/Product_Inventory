@@ -2,14 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import { actionProduct } from "../../../actions/product";
-import { getAllCategories } from "@/data/category";
-import prisma from "../../../utils/prisma";
 
 interface NewCategories{
     value: string;
     label: string;
 }
-export default async function NewProductForm(){
+export default function NewProductForm(){
     const formRef = useRef<HTMLFormElement>(null);
     
     const formAction = async (formData: FormData) => {
@@ -19,15 +17,15 @@ export default async function NewProductForm(){
     }
 
     return(
-        <div className="w-96 mt-10 my-auto border-2 rounded-md flex justify-center">
+        <div className="w-96 flex  border-2 border-black pt-6 mx-auto">
             <form 
                 className="grid grid-flow-row my-4 m-2 mx-4"
                 ref={formRef}
                 action={formAction}
                 >
                 <div>
-                    <span className="mr-4 text-lg font-bold">Category</span>                                        
-
+                    
+                    <span className="mr-4 text-lg font-bold ">Category</span>                                                            
                     <input 
                         className="mb-4 outline-double"
                         type='text'
@@ -36,16 +34,16 @@ export default async function NewProductForm(){
                     />
                 </div>
                 <div>
-                    <span className="mr-4 text-lg font-bold">Product</span>
+                    <span className="mr-4 text-lg font-bold  w-50">Product</span>
                     <input 
-                        className="mb-4 outline-double"
+                        className="mb-4 outline-dashed"
                         type='text'
                         name="name" 
                         placeholder="Enter product name"                        
                     />
                 </div>
                 <div>
-                    <span className="mr-4 text-lg font-bold">Quantity</span>
+                    <span className="mr-4 text-lg font-bold  w-0">Quantity</span>
                     <input 
                         className="mb-4 outline-double"
                         type='number'
