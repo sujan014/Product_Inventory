@@ -1,37 +1,40 @@
 "use server";
+import { NewProduct, ProductSchema } from "../lib/types";
 import prisma from "../utils/prisma";
 import { revalidatePath } from "next/cache";
 
-export const actionProduct = async (formData: FormData) => {
-    console.log(Object.fromEntries(formData));
-    const data = {
-        formCategory: formData.get("category") as string,
-        formName: formData.get("name") as string,
-        formQuantity: parseInt(formData.get("quantity") as string)
+export const actionProduct = async (newProduct: NewProduct) => {
+    // server-side validation        
+
+    const result = ProductSchema.safeParse(newProduct);
+    if (!result.success){
+        let errorMessage = '';
+        result.error.issues.forEach(issue => {
+            errorMessage = errorMessage + issue.path[0] + ': ' + issue.message + '. \n';
+        });
+        return {
+            error: errorMessage,
+        }
     }
 
-    console.log("form name => " + data.formCategory);
-    console.log("form name => " + data.formName);
-    console.log("form quantity => " + data.formQuantity);
     try{
         await prisma.category.update({
             where: {
-                name: data.formCategory                                
+                name: newProduct.category
             },
             data: {
                 product: {
                     create: {
-                        name: data.formName,
+                        name: newProduct.product,
                         inventory: {
                             create: {
-                                qty: data.formQuantity,
+                                qty: newProduct.quantity,
                             }
                         }
                     }
                 }
             }            
-        })
-        
+        })        
     } catch(error){
         console.log(error);
     }

@@ -1,15 +1,22 @@
 "use client";
 import { useRef } from "react";
 import { actionCategory } from "../../../actions/category";
+import toast from "react-hot-toast";
 
 export default function NewCategoryForm(){
     const formRef = useRef<HTMLFormElement>(null);
     
     const formAction = async (formData: FormData) => {
-        // validation here
-        // Zod validation tool
-        await actionCategory(formData);
-
+        // Zod validation
+        const newCategory = {
+            category: formData.get("category") as string,
+        }
+        let response = await actionCategory(newCategory);
+        if (response?.error){
+            toast.error(response.error);
+        } else{
+            toast.success(`${newCategory.category} was added successfully.`)
+        }
         formRef.current?.reset();
     }
 
@@ -27,7 +34,7 @@ export default function NewCategoryForm(){
                         type='text'
                         name="category" 
                         placeholder="Enter new category"
-                        required
+                        // required
                     />
                 </div>
                 <button 

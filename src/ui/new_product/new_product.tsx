@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { actionProduct } from "../../../actions/product";
+import toast from "react-hot-toast";
 
 interface NewCategories{
     value: string;
@@ -11,7 +12,18 @@ export default function NewProductForm(){
     const formRef = useRef<HTMLFormElement>(null);
     
     const formAction = async (formData: FormData) => {
-        await actionProduct(formData);
+        const newProd = {
+            category: formData.get("category") as string,
+            product: formData.get("name") as string,
+            quantity: parseInt(formData.get("quantity") as string)
+        }        
+
+        let response = await actionProduct(newProd);
+        if (response?.error){
+            toast.error(response.error);
+        } else{
+            toast.success(`${newProd.product} was added successfully.`)
+        }
 
         formRef.current?.reset();
     }
@@ -23,8 +35,7 @@ export default function NewProductForm(){
                 ref={formRef}
                 action={formAction}
                 >
-                <div>
-                    
+                <div>                    
                     <span className="mr-4 text-lg font-bold ">Category</span>                                                            
                     <input 
                         className="mb-4 outline-double"
