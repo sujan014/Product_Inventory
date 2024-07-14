@@ -29,7 +29,7 @@ export default function NewProductForm(){
     }
 
     return(
-        <div className="w-96 flex  border-2 border-black pt-6 mx-auto">
+        <div className="w-96 flex border-2 border-black pt-6 mx-auto">
             <form 
                 className="grid grid-flow-row my-4 m-2 mx-4"
                 ref={formRef}

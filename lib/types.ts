@@ -1,3 +1,4 @@
+import { Inventory, Products } from "@prisma/client";
 import {z} from "zod";
 
 export const CategorySchema = z.object({
@@ -48,7 +49,7 @@ export const ProductSchema = z.object({
                 }),
 });
 
-export type ProductType = z.infer<typeof ProductSchema>;
+//export type ProductType = z.infer<typeof ProductSchema>;
 
 export interface NewCategory {
     category: string;
@@ -59,3 +60,46 @@ export interface NewProduct {
     product: string;
     quantity: number;
 };
+
+export interface DetailProduct {
+    // id: string;
+    // categoryName: string;
+    // categoryId: string;
+    // productName: string;
+    product: Products;    
+}
+
+export type ProductType = {    
+    id: string;
+    name: string;
+    categoryId: Nullable<string>;//string;// | null;
+    inventory: Nullable<{
+        id: string;
+        qty: number;
+        productId: Nullable<string>;//string;// | null;
+    }>    
+    // id: string;
+    // name: string;
+    // categoryId: string;// | null;
+    // inventory: {
+    //     id: string;
+    //     qty: number;
+    //     productId: string;// | null;
+    // }
+}
+
+//export type ProductListType  = ProductType[];
+
+type Nullable<T> = T | null;
+export type ProductListType  = {
+    productTypeList: {
+        id: string;
+        name: string;
+        categoryId: Nullable<string>;//string;// | null;
+        inventory: Nullable<{
+            id: string;
+            qty: number;
+            productId: Nullable<string>;//string;// | null;
+        }>
+    }[]
+}
